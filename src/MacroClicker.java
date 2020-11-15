@@ -68,7 +68,8 @@ public class MacroClicker
 				    file.add(exit);
 				    
 				    
-				    exit.addActionListener(new ActionListener() {
+				    exit.addActionListener(new ActionListener()
+				    {
 				    	public void actionPerformed (ActionEvent a)
 						{
 				    		System.exit(0);
@@ -83,7 +84,8 @@ public class MacroClicker
 				    settings.add(config);
 				    
 				    
-					config.addActionListener(new ActionListener() {
+					config.addActionListener(new ActionListener()
+					{
 				    	public void actionPerformed (ActionEvent a)
 						{
 				    		AltWindow newWindow = new AltWindow("Settings", 200, 200);
@@ -113,13 +115,15 @@ public class MacroClicker
 		    
 		    
 		    
-			activate.addActionListener(new ActionListener() {
+			activate.addActionListener(new ActionListener()
+			{
 		    	public void actionPerformed (ActionEvent a)
 				{
 		    		//ping.play();
 				}
 		    });
-			deactivate.addActionListener(new ActionListener() {
+			deactivate.addActionListener(new ActionListener()
+			{
 		    	public void actionPerformed (ActionEvent a)
 				{
 		    		//boohw.play();
