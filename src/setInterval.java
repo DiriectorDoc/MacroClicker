@@ -9,13 +9,24 @@ public class setInterval
 	
 	private ScheduledFuture<?> endHandle;
 	
-	setInterval(Runnable callback, long milliseconds)
+	private Runnable callback;
+	
+	private long period;
+	
+	setInterval(Runnable call, long milliseconds)
 	{
-		endHandle = scheduler.scheduleAtFixedRate(callback, milliseconds, milliseconds, TimeUnit.MILLISECONDS);
+		callback = call;
+		period = milliseconds;
+		restart();
 	}
 	
 	public void clearInterval()
 	{
 		endHandle.cancel(true);
+	}
+	
+	public void restart()
+	{
+		endHandle = scheduler.scheduleAtFixedRate(callback, period, period, TimeUnit.MILLISECONDS);
 	}
 }
