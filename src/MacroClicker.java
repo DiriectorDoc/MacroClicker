@@ -32,22 +32,24 @@ public class MacroClicker
 	
 	public static void main (String[] args)
 	{
-		try {
+		try
+		{
 			bot = new Robot();
-		} catch (AWTException e) {
+			GlobalScreen.registerNativeHook();
+		}
+		catch(AWTException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			GlobalScreen.registerNativeHook();
-		}
-		catch (NativeHookException ex) {
+		catch(NativeHookException ex)
+		{
 			System.err.println("There was a problem registering the native hook.");
 			System.err.println(ex.getMessage());
 
 			System.exit(1);
 		}
-		GlobalScreen.addNativeKeyListener(new GlobalKeyListenerExample());
+		GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
 
 		Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
 		logger.setLevel(Level.WARNING);
