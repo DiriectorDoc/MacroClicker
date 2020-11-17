@@ -13,6 +13,8 @@ public class setInterval
 	
 	private long period;
 	
+	private boolean isRunning = false;
+	
 	setInterval(Runnable call, long milliseconds)
 	{
 		callback = call;
@@ -21,11 +23,19 @@ public class setInterval
 	
 	public void clearInterval()
 	{
-		endHandle.cancel(true);
+		if(isRunning)
+		{
+			endHandle.cancel(true);
+			isRunning = false;
+		}
 	}
 	
 	public void restart()
 	{
-		endHandle = scheduler.scheduleAtFixedRate(callback, period, period, TimeUnit.MILLISECONDS);
+		if(!isRunning)
+		{
+			endHandle = scheduler.scheduleAtFixedRate(callback, period, period, TimeUnit.MILLISECONDS);
+			isRunning = true;
+		}
 	}
 }
