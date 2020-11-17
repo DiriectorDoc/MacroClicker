@@ -1,9 +1,10 @@
+import java.awt.AWTException;
 import java.awt.Dimension;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -12,37 +13,43 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MacroClicker
 {
 	/*static Audio ping = new Audio("C:\\Users\\User\\AppData\\Roaming\\Macro Clicker\\Ping.wav"),
 			     boohw = new Audio("C:\\Users\\User\\AppData\\Roaming\\Macro Clicker\\Boohw.wav");*/
 	
-	private static volatile boolean keyPressed = false;
+	public static volatile boolean keyPressed = false;
 	
 	public static void main (String[] args)
 	{
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher(){
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent ke)
-            {
-                synchronized(MacroClicker.class)
-                {
-                    switch (ke.getID())
-                    {
-                    case KeyEvent.KEY_PRESSED:
-                        keyPressed = ke.getKeyCode() == KeyEvent.VK_C;
-                        break;
-                    case KeyEvent.KEY_RELEASED:
-                        keyPressed = false;
-                        break;
-                    }
-                    return false;
-                }
-            }
-        });
+		try {
+			GlobalScreen.registerNativeHook();
+		}
+		catch (NativeHookException ex) {
+			System.err.println("There was a problem registering the native hook.");
+			System.err.println(ex.getMessage());
+
+			System.exit(1);
+		}
+		GlobalScreen.addNativeKeyListener(new GlobalKeyListenerExample());
+
+		Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+		logger.setLevel(Level.WARNING);
+		logger.setUseParentHandlers(false);
+		
 		build();
 		@SuppressWarnings("unused")
 		setInterval clicker = new setInterval(() -> {
+			if(keyPressed)
+			{
+				click();
+			}
 			System.out.println(keyPressed);
 		}, 1000);
 	}
@@ -117,18 +124,30 @@ public class MacroClicker
 		    
 			activate.addActionListener(new ActionListener()
 			{
-		    	public void actionPerformed (ActionEvent a)
+		    	public void actionPerformed(ActionEvent a)
 				{
 		    		//ping.play();
 				}
 		    });
 			deactivate.addActionListener(new ActionListener()
 			{
-		    	public void actionPerformed (ActionEvent a)
+		    	public void actionPerformed(ActionEvent a)
 				{
 		    		//boohw.play();
 				}
 		    });
+		}
+	}
+	
+	public static void click()
+	{
+	    try {
+			Robot bot = new Robot();
+		    bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		    bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
