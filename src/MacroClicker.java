@@ -127,7 +127,6 @@ public class MacroClicker
 
 			window.add(Box.createRigidArea(new Dimension(700, 500)));
 		    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    //window.addKeyListener(new keys());
 		    window.pack();
 		    window.setVisible(true);
 		    
