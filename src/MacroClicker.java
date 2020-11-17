@@ -26,8 +26,18 @@ public class MacroClicker
 	
 	public static volatile boolean keyPressed = false;
 	
+	public static setInterval clicker;
+	
+	private static Robot bot;
+	
 	public static void main (String[] args)
 	{
+		try {
+			bot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
 			GlobalScreen.registerNativeHook();
 		}
@@ -44,8 +54,7 @@ public class MacroClicker
 		logger.setUseParentHandlers(false);
 		
 		build();
-		@SuppressWarnings("unused")
-		setInterval clicker = new setInterval(() -> {
+		clicker = new setInterval(() -> {
 			if(keyPressed)
 			{
 				click();
@@ -127,6 +136,7 @@ public class MacroClicker
 		    	public void actionPerformed(ActionEvent a)
 				{
 		    		//ping.play();
+		    		clicker.restart();
 				}
 		    });
 			deactivate.addActionListener(new ActionListener()
@@ -134,6 +144,7 @@ public class MacroClicker
 		    	public void actionPerformed(ActionEvent a)
 				{
 		    		//boohw.play();
+		    		clicker.clearInterval();
 				}
 		    });
 		}
@@ -141,13 +152,7 @@ public class MacroClicker
 	
 	public static void click()
 	{
-	    try {
-			Robot bot = new Robot();
-		    bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		    bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
 }

@@ -17,7 +17,6 @@ public class setInterval
 	{
 		callback = call;
 		period = milliseconds;
-		restart();
 	}
 	
 	public void clearInterval()
