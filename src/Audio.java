@@ -43,16 +43,16 @@ public class Audio
 				}
 			);
 			clip.start();
-		} 
-		catch(LineUnavailableException e) 
+		}
+		catch(LineUnavailableException e)
 		{
 			e.printStackTrace();
-		} 
-		catch(IOException e) 
+		}
+		catch(IOException e)
 		{
 			e.printStackTrace();
-		} 
-		catch(UnsupportedAudioFileException e) 
+		}
+		catch(UnsupportedAudioFileException e)
 		{
 			e.printStackTrace();
 		}

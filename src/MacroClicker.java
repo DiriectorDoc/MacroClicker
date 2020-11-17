@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class MacroClicker
 {
 	static Audio ping = new Audio(".\\src\\resources\\ping.wav"),
-			     boohw = new Audio(".\\src\\resources\\boohw.wav");
+				 boohw = new Audio(".\\src\\resources\\boohw.wav");
 	
 	public static volatile boolean keyPressed = false;
 	
@@ -88,7 +88,7 @@ public class MacroClicker
 				    
 				    exit.addActionListener(new ActionListener()
 				    {
-				    	public void actionPerformed (ActionEvent a)
+				    	public void actionPerformed(ActionEvent a)
 						{
 				    		System.exit(0);
 						}
@@ -104,12 +104,12 @@ public class MacroClicker
 				    
 					config.addActionListener(new ActionListener()
 					{
-				    	public void actionPerformed (ActionEvent a)
+				    	public void actionPerformed(ActionEvent a)
 						{
 				    		AltWindow newWindow = new AltWindow("Settings", 200, 200);
 						    
-						    JButton test = new JButton("Tester");  
-						    test.setBounds(5,5,95,30); 
+						    JButton test = new JButton("Tester");
+						    test.setBounds(5,5,95,30);
 						    newWindow.add(test);
 						    
 						    newWindow.buildAndShow();
@@ -117,12 +117,12 @@ public class MacroClicker
 				    });
 			    }
 		    }
-		    JButton activate = new JButton("Activate");  
-		    activate.setBounds(5,5,95,30); 
+		    JButton activate = new JButton("Activate");
+		    activate.setBounds(5,5,95,30);
 		    window.add(activate);
 		    
-		    JButton deactivate = new JButton("Deactivate");  
-		    deactivate.setBounds(5,40,95,30); 
+		    JButton deactivate = new JButton("Deactivate");
+		    deactivate.setBounds(5,40,95,30);
 		    window.add(deactivate);
 
 			window.add(Box.createRigidArea(new Dimension(700, 500)));
