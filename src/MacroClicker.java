@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 
 public class MacroClicker
 {
-	/*static Audio ping = new Audio("C:\\Users\\User\\AppData\\Roaming\\Macro Clicker\\Ping.wav"),
-			     boohw = new Audio("C:\\Users\\User\\AppData\\Roaming\\Macro Clicker\\Boohw.wav");*/
+	static Audio ping = new Audio(".\\src\\resources\\ping.wav"),
+			     boohw = new Audio(".\\src\\resources\\boohw.wav");
 	
 	public static volatile boolean keyPressed = false;
 	
@@ -30,7 +30,7 @@ public class MacroClicker
 	
 	private static Robot bot;
 	
-	public static void main (String[] args)
+	public static void main(String[] args)
 	{
 		try
 		{
@@ -137,7 +137,7 @@ public class MacroClicker
 			{
 		    	public void actionPerformed(ActionEvent a)
 				{
-		    		//ping.play();
+		    		ping.play();
 		    		clicker.restart();
 				}
 		    });
@@ -145,7 +145,7 @@ public class MacroClicker
 			{
 		    	public void actionPerformed(ActionEvent a)
 				{
-		    		//boohw.play();
+		    		boohw.play();
 		    		clicker.clearInterval();
 				}
 		    });

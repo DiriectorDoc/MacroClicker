@@ -34,7 +34,7 @@ public class Audio
 				{
 		    		public void update(LineEvent event)
 		    		{
-		    			if (event.getType().equals(LineEvent.Type.STOP))
+		    			if(event.getType().equals(LineEvent.Type.STOP))
 		    			{
 		    				Line soundClip = event.getLine();
 		    				soundClip.close();
@@ -44,15 +44,15 @@ public class Audio
 			);
 			clip.start();
 		} 
-		catch (LineUnavailableException e) 
+		catch(LineUnavailableException e) 
 		{
 			e.printStackTrace();
 		} 
-		catch (IOException e) 
+		catch(IOException e) 
 		{
 			e.printStackTrace();
 		} 
-		catch (UnsupportedAudioFileException e) 
+		catch(UnsupportedAudioFileException e) 
 		{
 			e.printStackTrace();
 		}
