@@ -8,7 +8,7 @@ class AltWindow extends JFrame
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int dimX,
 				dimY;
 
@@ -20,10 +20,10 @@ class AltWindow extends JFrame
 
 	public AltWindow(String name)
 	{
-		
+
 	}
-	
-	public void buildAndShow()
+
+	public void build()
 	{
 		if(dimX > 0 && dimY > 0)
 			setPreferredSize(new Dimension(dimX, dimY));

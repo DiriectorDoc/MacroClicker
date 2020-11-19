@@ -13,17 +13,17 @@ public class Audio
 {
 	private Clip clip;
 	private File file;
-	
+
 	public Audio(String path)
 	{
 		file = new File(path);
 	}
-	
+
 	public Audio(File sample)
 	{
 		file = sample;
 	}
-	
+
 	public void play()
 	{
 		try
@@ -32,14 +32,14 @@ public class Audio
 			clip.open(AudioSystem.getAudioInputStream(file));
 			clip.addLineListener(new LineListener()
 				{
-		    		public void update(LineEvent event)
-		    		{
-		    			if(event.getType().equals(LineEvent.Type.STOP))
-		    			{
-		    				Line soundClip = event.getLine();
-		    				soundClip.close();
-			    		}
-			    	}
+					public void update(LineEvent event)
+					{
+						if(event.getType().equals(LineEvent.Type.STOP))
+						{
+							Line soundClip = event.getLine();
+							soundClip.close();
+						}
+					}
 				}
 			);
 			clip.start();

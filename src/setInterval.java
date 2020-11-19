@@ -6,21 +6,21 @@ import java.util.concurrent.TimeUnit;
 public class setInterval
 {
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-	
+
 	private ScheduledFuture<?> endHandle;
-	
+
 	private Runnable callback;
-	
+
 	private long period;
-	
+
 	private boolean isRunning = false;
-	
+
 	setInterval(Runnable call, long milliseconds)
 	{
 		callback = call;
 		period = milliseconds;
 	}
-	
+
 	public void clearInterval()
 	{
 		if(isRunning || !endHandle.isCancelled())
@@ -29,7 +29,7 @@ public class setInterval
 			isRunning = false;
 		}
 	}
-	
+
 	public void restart()
 	{
 		if(!isRunning)

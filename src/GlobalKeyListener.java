@@ -4,7 +4,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class GlobalKeyListener implements NativeKeyListener
 {
 	private static int lastKeyPressed;
-	
+
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e)
 	{
