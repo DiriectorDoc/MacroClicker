@@ -8,6 +8,8 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -19,7 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
@@ -43,8 +45,6 @@ public class MacroClicker
 	private static Robot bot;
 
 	private static int delay = 30;
-
-	private static String info = SimpleFileReader.getContent(".\\info\\jnativehook.txt");
 
 	public static void main(String[] args)
 	{
@@ -151,21 +151,23 @@ public class MacroClicker
 			aboutWindow.setAlwaysOnTop(true);
 			aboutWindow.setModalityType(ModalityType.APPLICATION_MODAL);
 			
-			JTextArea textArea = new JTextArea(5, 20);
-			textArea.setLineWrap(true);
-			textArea.setWrapStyleWord(true);
+			JTextPane textPane = new JTextPane();
+			textPane.setContentType("text/html");
+			textPane.setEditable(false);
+			try {
+				textPane.setPage(new File(".\\src\\resources\\about.html").toURI().toURL());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			JScrollPane scrollPane = new JScrollPane(textArea);
+			JScrollPane scrollPane = new JScrollPane(textPane);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			textArea.setEditable(false);
 			
 			aboutWindow.add(scrollPane);
 			
 			aboutWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			aboutWindow.pack();
-			
-			info = info.replaceAll("\n", " ");
-			textArea.append(info);
 
 
 
