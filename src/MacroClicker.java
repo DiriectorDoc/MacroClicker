@@ -44,7 +44,7 @@ public class MacroClicker
 
 	private static int delay = 30;
 
-	private static String info = SimpleFileReader.getContent(".\\credits\\jnativehook.txt");
+	private static String info = SimpleFileReader.getContent(".\\info\\jnativehook.txt");
 
 	public static void main(String[] args)
 	{
