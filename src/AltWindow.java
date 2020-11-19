@@ -31,9 +31,4 @@ class AltWindow extends JFrame
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		pack();
 	}
-
-	public void show()
-	{
-		setVisible(true);
-	}
 }
