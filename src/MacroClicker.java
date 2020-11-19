@@ -1,4 +1,5 @@
 import java.awt.AWTException;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
@@ -11,11 +12,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
@@ -122,9 +126,14 @@ public class MacroClicker
 						slider.setValue(33);
 						WinSounds.play("win.sound.exclamation");
 					}
+					if(val < 1)
+					{
+						slider.setValue(1);
+					}
 				}
 			});
-			slider.addMouseListener(new MouseAdapter(){
+			slider.addMouseListener(new MouseAdapter()
+			{
 				@Override
 				public void mouseReleased(MouseEvent me)
 				{
@@ -133,6 +142,30 @@ public class MacroClicker
 			});
 			configWindow.add(slider);
 			configWindow.build();
+			
+			
+			
+			JDialog aboutWindow = new JDialog();
+			aboutWindow.setPreferredSize(new Dimension(400, 400));
+			aboutWindow.setModal(true);
+			aboutWindow.setAlwaysOnTop(true);
+			aboutWindow.setModalityType(ModalityType.APPLICATION_MODAL);
+			
+			JTextArea textArea = new JTextArea(5, 20);
+			textArea.setLineWrap(true);
+			textArea.setWrapStyleWord(true);
+			
+			JScrollPane scrollPane = new JScrollPane(textArea);
+			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			textArea.setEditable(false);
+			
+			aboutWindow.add(scrollPane);
+			
+			aboutWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			aboutWindow.pack();
+			
+			info = info.replaceAll("\n", " ");
+			textArea.append(info);
 
 
 
@@ -187,7 +220,7 @@ public class MacroClicker
 					@Override
 					public void mousePressed(MouseEvent me)
 					{
-
+						aboutWindow.setVisible(true);
 					}
 				});
 

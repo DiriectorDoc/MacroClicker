@@ -28,7 +28,7 @@ class AltWindow extends JFrame
 	{
 		if(dimX > 0 && dimY > 0)
 			setPreferredSize(new Dimension(dimX, dimY));
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pack();
 	}
 }
