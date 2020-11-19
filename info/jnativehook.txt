@@ -1,4 +1,0 @@
-This program makes use of jnativehook
-which is availible through the GNU
-General Public Licence as well as the
-GNU Lesser General Public Licence.
