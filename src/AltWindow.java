@@ -5,7 +5,10 @@ import javax.swing.JFrame;
 
 class AltWindow extends JFrame
 {
-	private static final long serialVersionUID = 3595832825444530846L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int dimX,
 				dimY;
@@ -15,10 +18,16 @@ class AltWindow extends JFrame
 		dimX = x;
 		dimY = y;
 	}
+
+	public AltWindow(String name)
+	{
+		
+	}
 	
 	public void buildAndShow()
 	{
-		add(Box.createRigidArea(new Dimension(dimX, dimY)));
+		if(dimX > 0 && dimY > 0)
+			setPreferredSize(new Dimension(dimX, dimY));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pack();
 	    setVisible(true);

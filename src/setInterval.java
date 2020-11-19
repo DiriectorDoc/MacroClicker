@@ -23,7 +23,7 @@ public class setInterval
 	
 	public void clearInterval()
 	{
-		if(isRunning)
+		if(isRunning || !endHandle.isCancelled())
 		{
 			endHandle.cancel(true);
 			isRunning = false;
