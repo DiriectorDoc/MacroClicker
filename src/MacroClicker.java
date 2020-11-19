@@ -174,7 +174,7 @@ public class MacroClicker
 					{
 						public void actionPerformed(ActionEvent a)
 						{
-							configWindow.show();
+							configWindow.setVisible(true);
 						}
 					});
 				}

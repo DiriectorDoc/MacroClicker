@@ -16,11 +16,12 @@ class AltWindow extends JFrame
 	{
 		dimX = x;
 		dimY = y;
+		setTitle(name);
 	}
 
 	public AltWindow(String name)
 	{
-
+		setTitle(name);
 	}
 
 	public void build()
