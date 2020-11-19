@@ -1,6 +1,5 @@
 import java.awt.Dimension;
 
-import javax.swing.Box;
 import javax.swing.JFrame;
 
 class AltWindow extends JFrame

@@ -40,6 +40,7 @@ public class MacroClicker
 	
 	public static void main(String[] args)
 	{
+		System.out.println(SimpleFileReader.getContent(".\\credits\\jnativehook.txt"));
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -137,10 +138,10 @@ public class MacroClicker
 						{
 				    		AltWindow newWindow = new AltWindow("Settings", 600, 200);
 						    
-				    		JSlider slider = new JSlider(JSlider.HORIZONTAL, 1000, 50000, 2000);
+				    		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 50, 33);
 				    		
-				    		slider.setMajorTickSpacing(7000);
-				    		slider.setMinorTickSpacing(3500);
+				    		slider.setMajorTickSpacing(10);
+				    		slider.setMinorTickSpacing(2);
 				    		slider.setPaintTicks(true);
 				    		slider.setPaintLabels(true);
 						    newWindow.add(slider);
@@ -174,6 +175,7 @@ public class MacroClicker
 		    window.add(Box.createRigidArea(new Dimension(700, 500)));
 		    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    window.pack();
+		    window.setResizable(false);
 		    window.setVisible(true);
 		    
 		    
