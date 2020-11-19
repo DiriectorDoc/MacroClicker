@@ -8,7 +8,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -35,8 +34,8 @@ import java.util.logging.Logger;
 
 public class MacroClicker
 {
-	static Audio ping = new Audio(".\\src\\resources\\ping.wav"),
-				 boohw = new Audio(".\\src\\resources\\boohw.wav");
+	/*static Audio ping = new Audio(MacroClicker.class.getResource("resources\\ping.wav")),
+				 boohw = new Audio(MacroClicker.class.getResource("resources\\boohw.wav"));*/
 
 	public static volatile boolean keyPressed = false;
 
@@ -45,6 +44,9 @@ public class MacroClicker
 	private static Robot bot;
 
 	private static int delay = 30;
+	
+	private static Audio ping = new Audio(MacroClicker.class.getResource("/resources/ping.wav")),
+			 boohw = new Audio(MacroClicker.class.getResource("/resources/boohw.wav"));
 
 	public static void main(String[] args)
 	{
@@ -142,30 +144,30 @@ public class MacroClicker
 			});
 			configWindow.add(slider);
 			configWindow.build();
-			
-			
-			
+
+
+
 			JDialog aboutWindow = new JDialog();
 			aboutWindow.setPreferredSize(new Dimension(400, 400));
 			aboutWindow.setModal(true);
 			aboutWindow.setAlwaysOnTop(true);
 			aboutWindow.setModalityType(ModalityType.APPLICATION_MODAL);
-			
+
 			JTextPane textPane = new JTextPane();
 			textPane.setContentType("text/html");
 			textPane.setEditable(false);
 			try {
-				textPane.setPage(new File(".\\src\\resources\\about.html").toURI().toURL());
+				textPane.setPage(MacroClicker.class.getResource("/resources/about.html"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			JScrollPane scrollPane = new JScrollPane(textPane);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			
+
 			aboutWindow.add(scrollPane);
-			
+
 			aboutWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			aboutWindow.pack();
 
@@ -180,7 +182,7 @@ public class MacroClicker
 				{
 					JMenuItem save = new JMenuItem("Save Config");
 					file.add(save);
-					save.setIcon(new ImageIcon(".\\src\\resources\\shell32_16761-7.png"));
+					save.setIcon(new ImageIcon(MacroClicker.class.getResource("/resources/shell32_16761-7.png")));
 
 					JMenuItem open = new JMenuItem("Open Config");
 					file.add(open);
