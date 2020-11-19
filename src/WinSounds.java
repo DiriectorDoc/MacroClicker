@@ -1,5 +1,3 @@
-import java.awt.Toolkit;
-
 public class WinSounds
 {
 	/*
@@ -21,6 +19,6 @@ public class WinSounds
 	 * */
 	public static void play(String sound)
 	{
-		((Runnable) Toolkit.getDefaultToolkit().getDesktopProperty(sound)).run();
+		((Runnable) java.awt.Toolkit.getDefaultToolkit().getDesktopProperty(sound)).run();
 	}
 }
