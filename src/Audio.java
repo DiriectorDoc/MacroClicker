@@ -1,15 +1,16 @@
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,14 +24,16 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.apache.commons.io.IOUtils;
 
-
 public class Audio
 {
 	private Clip clip;
 	private File file;
+	private String extension;
 
 	public Audio(URL url)
 	{
+		String urlStr = url.toString();
+		extension = urlStr.substring(urlStr.length() - 4).replaceAll("\\w?[.]", "");
 		URI path = null;
 		try
 		{
@@ -41,13 +44,21 @@ public class Audio
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try
+		switch(extension)
 		{
-			getFile(path.toString().split("!"));
-		}
-		catch(java.lang.IllegalArgumentException e)
-		{
-			file = Paths.get(path).toFile();
+		case "wav":
+			try
+			{
+				getFile(path.toString().split("!"));
+			}
+			catch(java.lang.IllegalArgumentException e)
+			{
+				file = Paths.get(path).toFile();
+			}
+			break;
+		case "ogg":
+			file = new File(path);
+			break;
 		}
 	}
 	
@@ -57,13 +68,11 @@ public class Audio
 		{
 			final Map<String, String> env = new HashMap<>();
 			final FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env);
-			final Path path = fs.getPath(array[1]);
-			InputStream in = Files.newInputStream(path);
 			final File tempFile = File.createTempFile("PREFIX", "SUFFIX");
 			tempFile.deleteOnExit();
 			try (FileOutputStream out = new FileOutputStream(tempFile))
 			{
-				IOUtils.copy(in, out);
+				IOUtils.copy(Files.newInputStream(fs.getPath(array[1])), out);
 			}
 			file = tempFile;
 			fs.close();
@@ -87,35 +96,37 @@ public class Audio
 
 	public void play()
 	{
-		try
+		switch(extension)
 		{
-			clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(file));
-			clip.addLineListener(new LineListener()
-				{
-					public void update(LineEvent event)
+		case "wav":
+			try
+			{
+				clip = AudioSystem.getClip();
+				clip.open(AudioSystem.getAudioInputStream(file));
+				clip.addLineListener(new LineListener()
 					{
-						if(event.getType().equals(LineEvent.Type.STOP))
+						public void update(LineEvent event)
 						{
-							Line soundClip = event.getLine();
-							soundClip.close();
+							if(event.getType().equals(LineEvent.Type.STOP))
+							{
+								Line soundClip = event.getLine();
+								soundClip.close();
+							}
 						}
 					}
-				}
-			);
-			clip.start();
-		}
-		catch(LineUnavailableException e)
-		{
-			e.printStackTrace();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch(UnsupportedAudioFileException e)
-		{
-			e.printStackTrace();
+				);
+				clip.start();
+			}
+			catch(LineUnavailableException | IOException | UnsupportedAudioFileException e)
+			{
+				e.printStackTrace();
+			}
+			break;
+		case "ogg":
+			/*
+			 * For a later date
+			 * */
+			break;
 		}
 	}
 }
