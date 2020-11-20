@@ -88,9 +88,8 @@ public class MacroClicker
 
 	public static void build()
 	{
-		JFrame window = new JFrame("Macro Clicker");
-		{
-			AltWindow configWindow = new AltWindow("Settings", 600, 200);
+		/* ~ ~ ~ Start of Config Window creation ~ ~ ~ */
+		AltWindow configWindow = new AltWindow("Settings", 600, 200);
 
 			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 50, 33);
 
@@ -125,56 +124,61 @@ public class MacroClicker
 					delay = 1000/slider.getValue();
 				}
 			});
-			configWindow.add(slider);
-			configWindow.build();
+
+		configWindow.add(slider);
+		configWindow.build();
+		/* ~ ~ ~ End of Config Window creation ~ ~ ~ */
 
 
-
-			JDialog aboutWindow = new JDialog();
-			aboutWindow.setPreferredSize(new Dimension(400, 400));
-			aboutWindow.setModal(true);
-			aboutWindow.setAlwaysOnTop(true);
-			aboutWindow.setModalityType(ModalityType.APPLICATION_MODAL);
+		/* ~ ~ ~ Start of About Window creation ~ ~ ~ */
+		JDialog aboutWindow = new JDialog();
+		aboutWindow.setPreferredSize(new Dimension(400, 400));
+		aboutWindow.setModal(true);
+		aboutWindow.setAlwaysOnTop(true);
+		aboutWindow.setModalityType(ModalityType.APPLICATION_MODAL);
 
 			JTextPane textPane = new JTextPane();
 			textPane.setContentType("text/html");
 			textPane.setEditable(false);
-			try {
+			try
+			{
 				textPane.setPage(resource("/resources/about.html"));
-			} catch (IOException e) {
+			}
+			catch(IOException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			JScrollPane scrollPane = new JScrollPane(textPane);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
 			aboutWindow.add(scrollPane);
 
-			aboutWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			aboutWindow.pack();
-
-
-
+		aboutWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		aboutWindow.pack();
+		/* ~ ~ ~ End of About Window creation ~ ~ ~ */
+		
+		
+		/* ~ ~ ~ Start of Main Window creation ~ ~ ~ */
+		JFrame window = new JFrame("Macro Clicker");
+		
 			JMenuBar menuBar = new JMenuBar();
 			window.setJMenuBar(menuBar);
-			{
+			
 				JMenu file = new JMenu("File");
 				file.setMnemonic(KeyEvent.VK_F);
 				menuBar.add(file);
-				{
+				
 					JMenuItem save = new JMenuItem("Save Config");
-					file.add(save);
 					save.setIcon(new ImageIcon(resource("/resources/icons/shell32_16761-7.png")));
+					file.add(save);
 
 					JMenuItem open = new JMenuItem("Open Config");
-					file.add(open);
 					open.setIcon(new ImageIcon(resource("/resources/icons/shell32_255-7.png")));
+					file.add(open);
 
 					JMenuItem exit = new JMenuItem("Exit");
-					file.add(exit);
 					exit.setIcon(new ImageIcon(resource("/resources/icons/shell32_240-7.png")));
-
 					exit.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent a)
@@ -182,15 +186,13 @@ public class MacroClicker
 							System.exit(0);
 						}
 					});
-				}
+					file.add(exit);
+				
 				JMenu settings = new JMenu("Settings");
 				settings.setMnemonic(KeyEvent.VK_S);
 				menuBar.add(settings);
-				{
+				
 					JMenuItem config = new JMenuItem("Cinfigure");
-					settings.add(config);
-
-
 					config.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent a)
@@ -198,11 +200,10 @@ public class MacroClicker
 							configWindow.setVisible(true);
 						}
 					});
-				}
+					settings.add(config);
+				
 				JMenu about = new JMenu("About");
 				about.setMnemonic(KeyEvent.VK_A);
-				menuBar.add(about);
-
 				about.addMouseListener(new MouseAdapter()
 				{
 					@Override
@@ -211,26 +212,11 @@ public class MacroClicker
 						aboutWindow.setVisible(true);
 					}
 				});
+				menuBar.add(about);
 
-			}
+			
 			JButton activate = new JButton("Activate");
 			activate.setBounds(5,5,95,30);
-			window.add(activate);
-
-			JButton deactivate = new JButton("Deactivate");
-			deactivate.setBounds(5,40,95,30);
-			window.add(deactivate);
-
-			window.add(Box.createRigidArea(new Dimension(700, 500)));
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			List<Image> icons = new ArrayList<Image>();
-			for(int i = 0; i < 4; i++)
-				icons.add(new ImageIcon(resource("/resources/icons/icon-" + i + ".png")).getImage());
-			window.setIconImages(icons);
-			window.pack();
-			window.setResizable(false);
-			window.setVisible(true);
-
 			activate.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent a)
@@ -238,8 +224,13 @@ public class MacroClicker
 					ping.play();
 					clicker.restart();
 					activate.setEnabled(false);
+					config.setEnabled(false);
 				}
 			});
+			window.add(activate);
+
+			JButton deactivate = new JButton("Deactivate");
+			deactivate.setBounds(5,40,95,30);
 			deactivate.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent a)
@@ -247,9 +238,21 @@ public class MacroClicker
 					boohw.play();
 					clicker.clearInterval();
 					activate.setEnabled(true);
+					config.setEnabled(true);
 				}
 			});
-		}
+			window.add(deactivate);
+
+		window.add(Box.createRigidArea(new Dimension(700, 500)));
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		List<Image> icons = new ArrayList<Image>();
+		for(int i = 0; i < 4; i++)
+			icons.add(new ImageIcon(resource("/resources/icons/icon-" + i + ".png")).getImage());
+		window.setIconImages(icons);
+		window.pack();
+		window.setResizable(false);
+		window.setVisible(true);
+		/* ~ ~ ~ End of Main Window creation ~ ~ ~ */
 	}
 
 	public static void click()
