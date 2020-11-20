@@ -38,9 +38,8 @@ import java.util.logging.Logger;
 
 public class MacroClicker
 {
-	/*static Audio ping = new Audio(MacroClicker.class.getResource("resources\\ping.wav")),
-				 boohw = new Audio(MacroClicker.class.getResource("resources\\boohw.wav"));*/
-
+	@SuppressWarnings("unused")
+	private static final short version = 1;
 	public static volatile boolean keyPressed = false;
 
 	public static setInterval clicker;
@@ -51,7 +50,7 @@ public class MacroClicker
 	
 	private static Audio ping = new Audio(resource("/resources/sounds/ping.wav")),
 						 boohw = new Audio(resource("/resources/sounds/boohw.wav"));
-
+	
 	public static void main(String[] args)
 	{
 		try
