@@ -1,6 +1,7 @@
 import java.awt.AWTException;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -29,6 +31,8 @@ import javax.swing.event.ChangeListener;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,8 +49,8 @@ public class MacroClicker
 
 	private static int delay = 30;
 	
-	private static Audio ping = new Audio(MacroClicker.class.getResource("/resources/ping.wav")),
-			 boohw = new Audio(MacroClicker.class.getResource("/resources/boohw.wav"));
+	private static Audio ping = new Audio(resource("/resources/sounds/ping.wav")),
+						 boohw = new Audio(resource("/resources/sounds/boohw.wav"));
 
 	public static void main(String[] args)
 	{
@@ -56,7 +60,7 @@ public class MacroClicker
 			bot = new Robot();
 			GlobalScreen.registerNativeHook();
 		}
-		catch(AWTException e)
+		catch(AWTException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,26 +71,6 @@ public class MacroClicker
 			System.err.println(ex.getMessage());
 
 			System.exit(1);
-		}
-		catch(ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch(InstantiationException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch(IllegalAccessException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch(UnsupportedLookAndFeelException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
 
@@ -157,7 +141,7 @@ public class MacroClicker
 			textPane.setContentType("text/html");
 			textPane.setEditable(false);
 			try {
-				textPane.setPage(MacroClicker.class.getResource("/resources/about.html"));
+				textPane.setPage(resource("/resources/about.html"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -182,14 +166,15 @@ public class MacroClicker
 				{
 					JMenuItem save = new JMenuItem("Save Config");
 					file.add(save);
-					save.setIcon(new ImageIcon(MacroClicker.class.getResource("/resources/shell32_16761-7.png")));
+					save.setIcon(new ImageIcon(resource("/resources/icons/shell32_16761-7.png")));
 
 					JMenuItem open = new JMenuItem("Open Config");
 					file.add(open);
+					open.setIcon(new ImageIcon(resource("/resources/icons/shell32_255-7.png")));
 
 					JMenuItem exit = new JMenuItem("Exit");
 					file.add(exit);
-
+					exit.setIcon(new ImageIcon(resource("/resources/icons/shell32_240-7.png")));
 
 					exit.addActionListener(new ActionListener()
 					{
@@ -239,6 +224,10 @@ public class MacroClicker
 
 			window.add(Box.createRigidArea(new Dimension(700, 500)));
 			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			List<Image> icons = new ArrayList<Image>();
+			for(int i = 0; i < 4; i++)
+				icons.add(new ImageIcon(resource("/resources/icons/icon-" + i + ".png")).getImage());
+			window.setIconImages(icons);
 			window.pack();
 			window.setResizable(false);
 			window.setVisible(true);
@@ -268,5 +257,10 @@ public class MacroClicker
 	{
 		bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	}
+	
+	private static URL resource(String path)
+	{
+		return MacroClicker.class.getResource(path);
 	}
 }
