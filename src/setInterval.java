@@ -23,11 +23,15 @@ public class setInterval
 
 	public void clearInterval()
 	{
-		if(isRunning || !endHandle.isCancelled())
+		try
 		{
-			endHandle.cancel(true);
-			isRunning = false;
+			if(isRunning || !endHandle.isCancelled())
+			{
+				endHandle.cancel(true);
+				isRunning = false;
+			}
 		}
+		catch(java.lang.NullPointerException ignored) {}
 	}
 
 	public void restart()
