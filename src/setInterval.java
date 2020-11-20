@@ -38,4 +38,10 @@ public class setInterval
 			isRunning = true;
 		}
 	}
+
+	public void setPeriod(long delay)
+	{
+		if(!isRunning)
+			period = delay;
+	}
 }
