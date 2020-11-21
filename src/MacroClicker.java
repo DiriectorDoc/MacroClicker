@@ -1,4 +1,5 @@
 import java.awt.AWTException;
+import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -9,7 +10,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.io.IOException;
+
 import java.net.URL;
 
 import javax.swing.Box;
@@ -20,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
@@ -46,7 +51,8 @@ public class MacroClicker
 
 	private static Robot bot;
 
-	private static int delay = 30;
+	private static int delay = 30,
+					   clicksPerSecond = 33;
 	
 	private static Audio ping = new Audio(resource("/resources/sounds/ping.wav")),
 						 boohw = new Audio(resource("/resources/sounds/boohw.wav"));
@@ -97,6 +103,7 @@ public class MacroClicker
 			slider.setMinorTickSpacing(2);
 			slider.setPaintTicks(true);
 			slider.setPaintLabels(true);
+			slider.setPreferredSize(new Dimension(550, 50));
 			slider.addChangeListener(new ChangeListener()
 			{
 				@Override
@@ -124,8 +131,62 @@ public class MacroClicker
 					delay = 1000/slider.getValue();
 				}
 			});
+			configWindow.add(slider, BorderLayout.PAGE_END);
 
-		configWindow.add(slider);
+			JPanel radioButtonPanel = new JPanel();
+			radioButtonPanel.setPreferredSize(new Dimension(170, 60));
+			radioButtonPanel.add(Box.createRigidArea(new Dimension(100, 80)),  BorderLayout.PAGE_START);
+			
+			Box radioButtons = Box.createHorizontalBox();
+
+				JRadioButton cps = new JRadioButton("Clicks/Second"),
+							 dms = new JRadioButton("Delay (ms)");
+				cps.setMnemonic(KeyEvent.VK_C);
+				dms.setMnemonic(KeyEvent.VK_D);
+				cps.setActionCommand("Clicks/Second");
+				dms.setActionCommand("Delay (ms)");
+				cps.setSelected(true);
+				
+				radioButtons.add(cps);
+				radioButtons.add(dms);
+				radioButtonPanel.add(radioButtons,  BorderLayout.LINE_START);
+
+			configWindow.add(radioButtonPanel, BorderLayout.LINE_START);
+			
+			JPanel textFieldPanel = new JPanel();
+			textFieldPanel.setPreferredSize(new Dimension(100, 60));
+			textFieldPanel.add(Box.createRigidArea(new Dimension(1, 80)),  BorderLayout.PAGE_START);
+			
+				NumberField textField = new NumberField(10);
+				textField.setValue(clicksPerSecond);
+				textField.setPreferredSize(new Dimension(100, 20));
+				textFieldPanel.add(textField,  BorderLayout.LINE_END);
+				
+			configWindow.add(textFieldPanel, BorderLayout.LINE_END);
+			
+		cps.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				cps.setSelected(true);
+				dms.setSelected(false);
+				textField.setValue(clicksPerSecond);
+			}
+		});
+		dms.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				cps.setSelected(false);
+				dms.setSelected(true);
+				textField.setValue(delay);
+			}
+		});
+
 		configWindow.build();
 		/* ~ ~ ~ End of Config Window creation ~ ~ ~ */
 
