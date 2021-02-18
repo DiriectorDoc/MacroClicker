@@ -1,7 +1,9 @@
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.Box;
+import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -97,7 +100,21 @@ public class MacroClicker
 		/* ~ ~ ~ Start of Config Window creation ~ ~ ~ */
 		AltWindow configWindow = new AltWindow("Settings", 600, 200);
 
-			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 50, 33);
+			JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 50, 33)
+			{
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				protected void paintComponent(Graphics g)
+				{
+					super.paintComponent(g);
+					
+					g.setColor(Color.red);
+					g.fillRect(384, 10, 195, 3);
+				}
+			};
 
 			slider.setMajorTickSpacing(10);
 			slider.setMinorTickSpacing(2);
